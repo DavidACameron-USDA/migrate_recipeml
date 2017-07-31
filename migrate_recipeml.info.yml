@@ -1,0 +1,9 @@
+name: Migrate RecipeML
+type: module
+description: 'Provides source plugins for the Migrate module and a form to enable the import of RecipeML.'
+package: Migration
+core: 8.x
+dependencies:
+  - drupal:migrate (>= 8.1)
+  - recipe:recipe
+  - recipe:ingredient
