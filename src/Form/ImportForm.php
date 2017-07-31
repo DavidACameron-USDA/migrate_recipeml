@@ -13,7 +13,7 @@ use Drupal\migrate_recipeml\Batch\MigrateRecipeMlImportBatch;
 class ImportForm extends ConfirmFormBase {
 
   /**
-   * (@inheritdoc}.
+   * {@inheritdoc}
    */
   public function getFormId() {
     return 'import_recipeml';
@@ -38,7 +38,15 @@ class ImportForm extends ConfirmFormBase {
   }
 
   /**
+   * The source configuration form constructor.
    *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   The form structure.
    */
   public function buildSourceForm(array $form, FormStateInterface $form_state) {
     $form['#title'] = $this->t('Import RecipeML');
@@ -62,7 +70,12 @@ class ImportForm extends ConfirmFormBase {
   }
 
   /**
+   * The source configuration form validation handler.
    *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
    */
   public function validateSourceForm(array &$form, FormStateInterface $form_state) {
     // Store the source URL in form storage.
@@ -70,7 +83,12 @@ class ImportForm extends ConfirmFormBase {
   }
 
   /**
+   * The source configuration form submission handler.
    *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
    */
   public function submitSourceForm(array &$form, FormStateInterface $form_state) {
     // Indicate the next step is confirmation.
@@ -79,7 +97,15 @@ class ImportForm extends ConfirmFormBase {
   }
 
   /**
+   * The confirm form constructor.
    *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
+   *
+   * @return array
+   *   The form structure.
    */
   public function buildConfirmForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
@@ -93,7 +119,12 @@ class ImportForm extends ConfirmFormBase {
   }
 
   /**
+   * The confirm form submission handler.
    *
+   * @param array $form
+   *   An associative array containing the structure of the form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The current state of the form.
    */
   public function submitConfirmForm(array &$form, FormStateInterface $form_state) {
     $migrations = [
@@ -117,21 +148,21 @@ class ImportForm extends ConfirmFormBase {
   }
 
   /**
-   * (@inheritdoc}.
+   * {@inheritdoc}
    */
   public function getCancelUrl() {
     return new Url('migrate_recipeml.admin');
   }
 
   /**
-   * (@inheritdoc}.
+   * {@inheritdoc}
    */
   public function getQuestion() {
     return $this->t('Are you sure?');
   }
 
   /**
-   * (@inheritdoc}.
+   * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     // This method is intentionally empty, see the specific submit methods for

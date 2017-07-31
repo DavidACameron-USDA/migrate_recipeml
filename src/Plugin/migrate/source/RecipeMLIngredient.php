@@ -42,7 +42,7 @@ class RecipeMLIngredient extends RecipeMLBase {
   /**
    * {@inheritdoc}
    */
-  protected function parseRecipeML() {
+  protected function parseRecipeMl() {
     $data = [];
 
     // Check all of the nodes in the RecipeML file.  Look for <ing> elements.
@@ -52,7 +52,7 @@ class RecipeMLIngredient extends RecipeMLBase {
         $ingredient = $this->getSimpleXml();
         if ($ingredient !== FALSE && !is_null($ingredient)) {
           // Extract data from the recipe's subelements.
-          $ingredient_data['name'] = $this->getValuesByXPath($ingredient, 'item');
+          $ingredient_data['name'] = $this->getValuesByXpath($ingredient, 'item');
         }
         $data[] = $ingredient_data;
       }

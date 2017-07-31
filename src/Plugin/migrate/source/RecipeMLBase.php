@@ -81,13 +81,13 @@ abstract class RecipeMLBase extends SourcePluginBase implements ContainerFactory
    * {@inheritdoc}
    */
   public function initializeIterator() {
-    return new \ArrayIterator($this->parseRecipeML());
+    return new \ArrayIterator($this->parseRecipeMl());
   }
 
   /**
    * Parses RecipeML into an array of data.
    */
-  abstract protected function parseRecipeML();
+  abstract protected function parseRecipeMl();
 
   /**
    * Builds a \SimpleXmlElement rooted at the iterator's current location.
@@ -136,7 +136,7 @@ abstract class RecipeMLBase extends SourcePluginBase implements ContainerFactory
    * @return array|mixed
    *   An array of values at the xpath or a string if there was only one value.
    */
-  protected function getValuesByXPath(\SimpleXMLElement $element, $xpath) {
+  protected function getValuesByXpath(\SimpleXMLElement $element, $xpath) {
     $values = [];
     foreach ($element->xpath($xpath) as $value) {
       $values[] = (string) $value;
@@ -172,20 +172,14 @@ abstract class RecipeMLBase extends SourcePluginBase implements ContainerFactory
         break;
     }
 
-    return t(
-      "@libxmlerrorcodename @libxmlerrorcode: @libxmlerrormessage\n" .
-      "Line: @libxmlerrorline\n" .
-      "Column: @libxmlerrorcolumn\n" .
-      "File: @libxmlerrorfile",
-      [
-        '@libxmlerrorcodename' => $error_code_name,
-        '@libxmlerrorcode' => $error->code,
-        '@libxmlerrormessage' => trim($error->message),
-        '@libxmlerrorline' => $error->line,
-        '@libxmlerrorcolumn' => $error->column,
-        '@libxmlerrorfile' => (($error->file)) ? $error->file : NULL,
-      ]
-    );
+    return t("@libxmlerrorcodename @libxmlerrorcode: @libxmlerrormessage\nLine: @libxmlerrorline\nColumn: @libxmlerrorcolumn\nFile: @libxmlerrorfile", [
+      '@libxmlerrorcodename' => $error_code_name,
+      '@libxmlerrorcode' => $error->code,
+      '@libxmlerrormessage' => trim($error->message),
+      '@libxmlerrorline' => $error->line,
+      '@libxmlerrorcolumn' => $error->column,
+      '@libxmlerrorfile' => (($error->file)) ? $error->file : NULL,
+    ]);
   }
 
   /**

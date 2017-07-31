@@ -4,6 +4,9 @@ namespace Drupal\Tests\migrate_recipeml\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 
+/**
+ * Tests the functionality of the Migrate RecipeML module.
+ */
 class RecipeMlImportTest extends BrowserTestBase {
 
   /**
@@ -35,7 +38,7 @@ class RecipeMlImportTest extends BrowserTestBase {
     $permissions = [
       'create recipe content',
       'import recipeml',
-      'view ingredient'
+      'view ingredient',
     ];
     $this->adminUser = $this->drupalCreateUser($permissions);
     $this->drupalLogin($this->adminUser);
@@ -47,11 +50,10 @@ class RecipeMlImportTest extends BrowserTestBase {
   public function testRecipeMlImport() {
     $this->drupalGet('admin/content/import-recipeml');
 
-
     // Import the RecipeML test file using the import form.
-    $edit = array(
+    $edit = [
       'url' => 'http://localhost/drupal8/modules/migrate_recipeml/tests/test_recipes.xml',
-    );
+    ];
     $this->drupalPostForm('admin/content/import-recipeml', $edit, 'Continue');
 
     // Check for the confirm form.

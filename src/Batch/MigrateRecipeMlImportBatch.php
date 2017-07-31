@@ -12,7 +12,6 @@ use Drupal\migrate\Event\MigrateMapSaveEvent;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\migrate\Event\MigrateRowDeleteEvent;
 use Drupal\migrate\MigrateExecutable;
-use Drupal\migrate_drupal_ui\Batch\MigrateMessageCapture;
 
 /**
  * Runs a single migration batch.
@@ -41,9 +40,9 @@ class MigrateRecipeMlImportBatch {
   /**
    * The maximum length in seconds to allow processing in a request.
    *
-   * @see self::run()
-   *
    * @var int
+   *
+   * @see self::run()
    */
   protected static $maxExecTime;
 
@@ -64,7 +63,7 @@ class MigrateRecipeMlImportBatch {
    * @param array $context
    *   The batch context.
    */
-  public static function run($initial_ids, $config, &$context) {
+  public static function run(array $initial_ids, array $config, array &$context) {
     if (!static::$listenersAdded) {
       $event_dispatcher = \Drupal::service('event_dispatcher');
       $event_dispatcher->addListener(MigrateEvents::POST_ROW_SAVE, [static::class, 'onPostRowSave']);
@@ -99,7 +98,6 @@ class MigrateRecipeMlImportBatch {
     $migration_id = reset($context['sandbox']['migration_ids']);
     $configuration = [];
     $configuration['source']['constants']['source_url'] = $config['source_url'];
-
 
     /** @var \Drupal\migrate\Plugin\Migration $migration */
     $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_id, $configuration);
@@ -187,10 +185,10 @@ class MigrateRecipeMlImportBatch {
         $migration = \Drupal::service('plugin.manager.migration')->createInstance($migration_id);
         $migration_name = $migration->label() ? $migration->label() : $migration_id;
         $context['message'] = (string) new TranslatableMarkup('Currently importing @migration (@current of @max total tasks)', [
-            '@migration' => $migration_name,
-            '@current' => $context['sandbox']['current'],
-            '@max' => $context['sandbox']['max'],
-          ]) . "<br />\n" . $context['message'];
+          '@migration' => $migration_name,
+          '@current' => $context['sandbox']['current'],
+          '@max' => $context['sandbox']['max'],
+        ]) . "<br />\n" . $context['message'];
       }
     }
     else {
@@ -213,7 +211,7 @@ class MigrateRecipeMlImportBatch {
    * @param string $elapsed
    *   The time to run the batch.
    */
-  public static function finished($success, $results, $operations, $elapsed) {
+  public static function finished($success, array $results, array $operations, $elapsed) {
     $successes = $results['successes'];
     $failures = $results['failures'];
 

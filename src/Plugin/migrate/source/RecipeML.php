@@ -50,7 +50,7 @@ class RecipeML extends RecipeMLBase {
   /**
    * {@inheritdoc}
    */
-  protected function parseRecipeML() {
+  protected function parseRecipeMl() {
     $data = [];
 
     // Check all of the nodes in the RecipeML file.  Look for <recipe> elements.
@@ -60,19 +60,19 @@ class RecipeML extends RecipeMLBase {
         $recipe = $this->getSimpleXml();
         if ($recipe !== FALSE && !is_null($recipe)) {
           // Extract data from the recipe's subelements.
-          $recipe_data['id'] = $this->getValuesByXPath($recipe, '@id');
-          $recipe_data['title'] = $this->getValuesByXPath($recipe, 'head/title');
+          $recipe_data['id'] = $this->getValuesByXpath($recipe, '@id');
+          $recipe_data['title'] = $this->getValuesByXpath($recipe, 'head/title');
           // Copy the title to the id field if no id was found.
           if ($recipe_data['id'] === []) {
             $recipe_data['id'] = $recipe_data['title'];
           }
-          $recipe_data['source'] = $this->getValuesByXPath($recipe, 'head/source');
-          $recipe_data['yield_qty'] = $this->getValuesByXPath($recipe, 'head/yield/qty');
-          $recipe_data['yield_unit'] = $this->getValuesByXPath($recipe, 'head/yield/unit');
-          $recipe_data['description'] = $this->getValuesByXPath($recipe, 'description');
+          $recipe_data['source'] = $this->getValuesByXpath($recipe, 'head/source');
+          $recipe_data['yield_qty'] = $this->getValuesByXpath($recipe, 'head/yield/qty');
+          $recipe_data['yield_unit'] = $this->getValuesByXpath($recipe, 'head/yield/unit');
+          $recipe_data['description'] = $this->getValuesByXpath($recipe, 'description');
           $recipe_data['ingredients'] = $this->getIngredients($recipe);
-          $recipe_data['directions'] = $this->getValuesByXPath($recipe, 'directions');
-          $recipe_data['note'] = $this->getValuesByXPath($recipe, 'note');
+          $recipe_data['directions'] = $this->getValuesByXpath($recipe, 'directions');
+          $recipe_data['note'] = $this->getValuesByXpath($recipe, 'note');
         }
         $data[] = $recipe_data;
       }
