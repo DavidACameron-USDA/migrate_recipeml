@@ -1,0 +1,7 @@
+migrate_recipeml.admin:
+  path: 'admin/content/import-recipeml'
+  defaults:
+    _form: '\Drupal\migrate_recipeml\Form\ImportForm'
+    _title: 'Import RecipeML'
+  requirements:
+    _permission: 'import recipeml'

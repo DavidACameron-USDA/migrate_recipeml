@@ -1,0 +1,4 @@
+migrate_recipeml.admin:
+  base_route: system.admin_content
+  route_name: migrate_recipeml.admin
+  title: Import RecipeML

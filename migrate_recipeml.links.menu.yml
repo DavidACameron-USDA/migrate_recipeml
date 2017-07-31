@@ -1,0 +1,5 @@
+migrate_recipeml.admin:
+  title: Import RecipeML
+  route_name: migrate_recipeml.admin
+  parent: system.admin_content
+  description: 'Import RecipeML'
