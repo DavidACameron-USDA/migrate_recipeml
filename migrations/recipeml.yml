@@ -1,0 +1,40 @@
+id: recipeml
+label: RecipeML
+source:
+  plugin: recipeml
+process:
+  type:
+    plugin: default_value
+    default_value: recipe
+  title: title
+  recipe_source: source
+  recipe_yield_amount: yield_qty
+  recipe_yield_unit: yield_unit
+  recipe_description: description
+  recipe_ingredient:
+    plugin: iterator
+    source: ingredients
+    process:
+      'quantity': qty
+      'unit_key':
+        plugin: callback
+        callable: ingredient_unit_fuzzymatch
+        source: unit
+      'target_id':
+        plugin: migration
+        migration: recipeml_ingredient
+        source: item
+      'note': prep
+  recipe_instructions: directions
+  recipe_notes: note
+destination:
+  plugin: entity:node
+migration_dependencies:
+  require:
+    - recipeml_ingredient
+dependencies:
+  enforced:
+    module:
+      - ingredient
+      - migrate_recipeml
+      - recipe

@@ -1,0 +1,18 @@
+id: recipeml_ingredient
+label: RecipeML Ingredient
+source:
+  plugin: recipeml_ingredient
+process:
+  name:
+    plugin: dedupe_entity
+    source: name
+    entity_type: ingredient
+    field: name
+destination:
+  plugin: entity:ingredient
+migration_dependencies: {}
+dependencies:
+  enforced:
+    module:
+      - ingredient
+      - migrate_recipeml
