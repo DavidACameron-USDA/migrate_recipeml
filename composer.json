@@ -1,0 +1,18 @@
+{
+  "name": "migrate_recipeml",
+  "description": "Provides source plugins for the Migrate module and a form to enable the import of RecipeML.",
+  "type": "drupal-module",
+  "authors": [
+    {
+      "name": "David Cameron (dcam)",
+      "homepage": "https://www.drupal.org/u/dcam",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/dcameron/migrate_recipeml/issues",
+    "source": "https://github.com/dcameron/migrate_recipeml"
+  },
+  "license": "GPL-2.0+",
+  "require": {}
+}
