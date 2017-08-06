@@ -13,6 +13,13 @@ use Drupal\migrate_recipeml\Batch\MigrateRecipeMlImportBatch;
 class ImportForm extends ConfirmFormBase {
 
   /**
+   * Uploaded file entity.
+   *
+   * @var \Drupal\file\FileInterface
+   */
+  protected $file;
+
+  /**
    * {@inheritdoc}
    */
   public function getFormId() {
@@ -51,10 +58,9 @@ class ImportForm extends ConfirmFormBase {
   public function buildSourceForm(array $form, FormStateInterface $form_state) {
     $form['#title'] = $this->t('Import RecipeML');
 
-    $form['url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Source file URL'),
-      '#description' => $this->t('Enter the URL of a file containing RecipeML for import.'),
+    $form['file'] = [
+      '#type' => 'file',
+      '#title' => $this->t('Upload a RecipeML file'),
       '#default_value' => '',
     ];
 
@@ -78,8 +84,13 @@ class ImportForm extends ConfirmFormBase {
    *   The current state of the form.
    */
   public function validateSourceForm(array &$form, FormStateInterface $form_state) {
-    // Store the source URL in form storage.
-    $form_state->set('source_url', $form_state->getValue('url'));
+    $validators = ['file_validate_extensions' => ['xml']];
+    $this->file = file_save_upload('file', $validators, 'temporary://', 0, FILE_EXISTS_REPLACE);
+
+    // Ensure we have the file uploaded.
+    if (!$this->file) {
+      $form_state->setErrorByName('file', $this->t('File to import not found.'));
+    }
   }
 
   /**
@@ -109,8 +120,8 @@ class ImportForm extends ConfirmFormBase {
    */
   public function buildConfirmForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildForm($form, $form_state);
-    $form['source_url'] = [
-      '#markup' => '<p>' . $this->t('<strong>Source URL:</strong> :source_url', [':source_url' => $form_state->get('source_url')]) . '</p>',
+    $form['filename'] = [
+      '#markup' => '<p>' . $this->t('<strong>File:</strong> :filename', [':filename' => $this->file->getFilename()]) . '</p>',
     ];
     $form['actions']['submit']['#submit'] = ['::submitConfirmForm'];
     $form['actions']['submit']['#value'] = $this->t('Import');
@@ -138,7 +149,7 @@ class ImportForm extends ConfirmFormBase {
       'operations' => [
         [
           [MigrateRecipeMlImportBatch::class, 'run'],
-          [$migrations, ['source_url' => $form_state->get('source_url')]],
+          [$migrations, ['source_url' => $this->file->getFileUri()]],
         ],
       ],
       'finished' => [MigrateRecipeMlImportBatch::class, 'finished'],
