@@ -8,6 +8,8 @@ use Drupal\migrate_recipeml\Batch\MigrateRecipeMlMessageCapture;
 
 /**
  * Tests the functionality of the Migrate RecipeML import plugins.
+ *
+ * @group migrate_recipeml
  */
 class RecipeMlImportTest extends KernelTestBase {
 
